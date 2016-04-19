@@ -1,0 +1,84 @@
+<html>
+  <head>
+	<title>Auth</title>
+	<style type="text/css">
+		.button{
+		border-color:#26759E;border-width: 0px 0px 0px 25px;border-style: solid;-webkit-box-shadow: #B4B5B5 3px 3px 3px  ;-moz-box-shadow: #B4B5B5 3px 3px 3px ; box-shadow: #B4B5B5 3px 3px 3px  ; -webkit-border-radius: 25px; -moz-border-radius: 25px;border-radius: 25px;font-size:25px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;
+		 background-color: #a7cfdf; background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));
+		 background-image: -webkit-linear-gradient(top, #a7cfdf, #23538a);
+		 background-image: -moz-linear-gradient(top, #a7cfdf, #23538a);
+		 background-image: -ms-linear-gradient(top, #a7cfdf, #23538a);
+		 background-image: -o-linear-gradient(top, #a7cfdf, #23538a);
+		 background-image: linear-gradient(to bottom, #a7cfdf, #23538a);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a7cfdf, endColorstr=#23538a);
+		}
+	</style>
+    <script type="text/javascript">
+      // Your Client ID can be retrieved from your project in the Google
+      // Developer Console, https://console.developers.google.com
+      var CLIENT_ID = '1025872202219-283r7seif9b97fcs68gen8s998c1te0u.apps.googleusercontent.com';
+      var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+	  var REDIRECT = ["https://people.cs.nctu.edu.tw/~ycchen0216023/calendar/auth.php"];
+		
+	  /**
+       * Check if current user has authorized this application.
+       */
+      function checkAuth() {
+        gapi.auth.authorize(
+          {
+            'client_id': CLIENT_ID,
+            'scope': SCOPES.join(' '),
+            'immediate': true
+          }, handleAuthResult);
+      }
+	  
+	  /**
+       * Handle response from authorization server.
+       *
+       * @param {Object} authResult Authorization result.
+       */
+      function handleAuthResult(authResult) {
+        var authorizeDiv = document.getElementById('authorize-div');
+        if (authResult && !authResult.error) {
+          // Hide auth UI, then load client library.
+        } else {
+          // Show auth UI, allowing the user to initiate authorization by
+          // clicking authorize button.
+          authorizeDiv.style.display = 'inline';
+        }
+      }
+	  
+	  /**
+       * Initiate auth flow in response to user clicking authorize button.
+       *
+       * @param {Event} event Button click event.
+       */
+      function handleAuthClick(event) {		
+		event.preventDefault();
+		event.stopPropagation();
+        gapi.auth.authorize(
+          {client_id: CLIENT_ID, scope: SCOPES, immediate: false, redirect_uri: REDIRECT, response_type: "code", access_type: "offline", approval_prompt: "force", state: $("#username").val()},
+          handleAuthResult);
+        return false;
+      }
+	  
+	  function backPage(){
+		document.location.href="http://people.cs.nctu.edu.tw/~ycchen0216023/calendar/calendar.html";
+	  }
+	  
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth">
+    </script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  </head>
+  <body>
+    <form id="authorize-div" onsubmit = "handleAuthClick(event)">
+		<font face ='cursive' size='16'>Authorize access to Google Calendar API</font><br>
+		<input type="text" id="username" name="username" placeholder="username" required><br><br>
+		<!--Button for the user to click to initiate auth sequence -->
+		<button id="authorize-button" a class='button' href='#' type="submit"></a>Authorize</button>
+    </form><br><br>
+	<div id="backpage-div">
+      <button id="backpage-button" a class='button' href='#' onclick="backPage()"></a>Back</button>
+    </div><br>
+  </body>
+</html>

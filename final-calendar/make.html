@@ -1,0 +1,82 @@
+<html>
+  <head>
+	<meta charset="utf-8">
+	<title> Make Event </title>	
+	<style type="text/css">
+	.button{
+	border-color:#26759E;border-width: 0px 0px 0px 25px;border-style: solid;-webkit-box-shadow: #B4B5B5 3px 3px 3px  ;-moz-box-shadow: #B4B5B5 3px 3px 3px ; box-shadow: #B4B5B5 3px 3px 3px  ; -webkit-border-radius: 25px; -moz-border-radius: 25px;border-radius: 25px;font-size:25px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;
+	 background-color: #a7cfdf; background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));
+	 background-image: -webkit-linear-gradient(top, #a7cfdf, #23538a);
+	 background-image: -moz-linear-gradient(top, #a7cfdf, #23538a);
+	 background-image: -ms-linear-gradient(top, #a7cfdf, #23538a);
+	 background-image: -o-linear-gradient(top, #a7cfdf, #23538a);
+	 background-image: linear-gradient(to bottom, #a7cfdf, #23538a);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a7cfdf, endColorstr=#23538a);
+	}
+	</style>
+	<script type="text/javascript">
+		// Your Client ID can be retrieved from your project in the Google
+      // Developer Console, https://console.developers.google.com
+      var CLIENT_ID = '1025872202219-283r7seif9b97fcs68gen8s998c1te0u.apps.googleusercontent.com';
+      var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+	  
+      function checkAuth() {
+        gapi.auth.authorize(
+          {
+            'client_id': CLIENT_ID,
+            'scope': SCOPES.join(' '),
+            'immediate': true
+          }, handleAuthResult);
+      }
+	  
+	  function handleAuthResult(authResult) {
+        if (authResult && !authResult.error) {
+          ;
+        } 
+		else {
+          alert("Please Authorize first !");
+        }
+      }
+	  		     
+      function makeEvents() {
+		var summary = document.getElementById("summary").value;
+		var s_t = document.getElementById("start").value;		
+		var e_t = document.getElementById("end").value;		
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function(){
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){	
+				console.log(xmlhttp.responseText);
+				if(xmlhttp.responseText.length != 0)
+					alert("Success !");
+				else
+					alert("Make Fail !");
+			}
+		}
+		xmlhttp.open("GET", "make.php?summary=" + summary + "&timeMin=" + s_t + "&timeMax=" + e_t, true);
+		xmlhttp.send();
+      }
+	 function backPage(){
+		document.location.href="http://people.cs.nctu.edu.tw/~ycchen0216023/calendar/calendar.html";
+	}
+	</script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth">
+    </script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+	</script>
+  </head>
+  <body>
+	<div id="backpage-div">
+      <button id="backpage-button" style="position:absolute;left:5%;top:15%" a class='button' href='#' onclick="backPage()"></a>
+        Back
+      </button>
+    </div>
+	<div id="make-div">
+		<font  style="position:absolute;left:20%;top:10%">Summary</font>
+		<input type="text" id="summary" style="position:absolute;left:20%;top:20%" required>
+		<font  style="position:absolute;left:40%;top:10%">start time</font>
+		<input type="date" id="start" style="position:absolute;left:40%;top:20%" required>
+		<font  style="position:absolute;left:60%;top:10%">end time</font>
+		<input type="date" id="end" style="position:absolute;left:60%;top:20%" required>
+		<button id="make-button" style="position:absolute;left:80%;top:15%" a class='button' href='#' onclick="makeEvents()"></a>Make</button>
+	</div>	
+  </body>
+</html>

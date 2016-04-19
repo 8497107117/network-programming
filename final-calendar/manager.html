@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<style>
+			table {
+				width:100%;
+			}
+			table, th, td {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+			th, td {
+				padding: 5px;
+			}
+			table#user tr:nth-child(even) {
+				background-color: #eee;
+			}
+			table#user tr:nth-child(odd) {
+				background-color:#fff;
+			}
+			table#user th	{
+				background-color: black;
+				color: white;
+			}
+		</style>
+		<style type="text/css">
+		.button{
+		border-color:#26759E;border-width: 0px 0px 0px 25px;border-style: solid;-webkit-box-shadow: #B4B5B5 3px 3px 3px  ;-moz-box-shadow: #B4B5B5 3px 3px 3px ; box-shadow: #B4B5B5 3px 3px 3px  ; -webkit-border-radius: 25px; -moz-border-radius: 25px;border-radius: 25px;font-size:25px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;
+		 background-color: #a7cfdf; background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));
+		 background-image: -webkit-linear-gradient(top, #a7cfdf, #23538a);
+		 background-image: -moz-linear-gradient(top, #a7cfdf, #23538a);
+		 background-image: -ms-linear-gradient(top, #a7cfdf, #23538a);
+		 background-image: -o-linear-gradient(top, #a7cfdf, #23538a);
+		 background-image: linear-gradient(to bottom, #a7cfdf, #23538a);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a7cfdf, endColorstr=#23538a);
+		}
+		</style>
+		<script>
+			function refresh(button){
+				var who = $(button).parent().siblings(':nth-child(1)').text();
+				console.log(who);
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function(){
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
+						$(button).parent().siblings(':nth-child(2)').text(xmlhttp.responseText);
+				}
+				xmlhttp.open("GET", "refresh.php?user_name=" + who, true);
+				xmlhttp.send();
+			}
+		
+			function show(){
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function(){
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+						var response = JSON.parse(xmlhttp.responseText);
+						console.log(xmlhttp.responseText);
+						console.log(response);
+						console.log(response.length);
+						for(i = 0;i < response.length;i++){							
+							var row = $("<tr></tr>");
+							row.append("<td align='center'>" + response[i]['username'] + "</td>");
+							row.append("<td align='center'>" + response[i]['token'] + "</td>");
+							row.append("<td align='center'><button id='refresh-button' a class='button' href='#' onclick='refresh(this)'></a>refresh</button></td>");
+							$("#table_body").append(row);
+						}						
+					}					
+				}
+				xmlhttp.open("GET", "manager.php", true);
+				xmlhttp.send();
+			}
+			function backPage(){
+				document.location.href="http://people.cs.nctu.edu.tw/~ycchen0216023/calendar/calendar.html";
+			}
+		</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+		</script>
+	</head>
+	<body onload="show()">
+		<div>
+			<table id="user">
+				<thead>
+				<tr>
+				<th>use name</th>
+				<th>access token</th>
+				<th>refresh</th>
+				<tr>
+				</thead>
+				<tbody id="table_body">
+				</tbody>
+			</table>
+		</div><br>
+		<div id="backpage-div"><button id="backpage-button" a class='button' href='#' onclick="backPage()"></a>Back</button></div>
+	</body>
+</html>

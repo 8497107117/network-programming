@@ -1,0 +1,56 @@
+<html>
+  <head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.button{
+		border-color:#26759E;border-width: 0px 0px 0px 25px;border-style: solid;-webkit-box-shadow: #B4B5B5 3px 3px 3px  ;-moz-box-shadow: #B4B5B5 3px 3px 3px ; box-shadow: #B4B5B5 3px 3px 3px  ; -webkit-border-radius: 25px; -moz-border-radius: 25px;border-radius: 25px;font-size:25px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;
+		 background-color: #a7cfdf; background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));
+		 background-image: -webkit-linear-gradient(top, #a7cfdf, #23538a);
+		 background-image: -moz-linear-gradient(top, #a7cfdf, #23538a);
+		 background-image: -ms-linear-gradient(top, #a7cfdf, #23538a);
+		 background-image: -o-linear-gradient(top, #a7cfdf, #23538a);
+		 background-image: linear-gradient(to bottom, #a7cfdf, #23538a);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a7cfdf, endColorstr=#23538a);
+		}
+	</style>
+	<title> Calendar </title>
+	<script type="text/javascript">
+		function turntoAuth(){
+			document.location.href="http://people.cs.nctu.edu.tw/~ycchen0216023/calendar/auth.html";
+		}		
+		function turntoList(){
+			document.location.href="http://people.cs.nctu.edu.tw/~ycchen0216023/calendar/list.html";
+		}
+		function turntoMake(){
+			document.location.href="http://people.cs.nctu.edu.tw/~ycchen0216023/calendar/make.html";
+		}
+		function turntoManager(){
+			document.location.href="http://people.cs.nctu.edu.tw/~ycchen0216023/calendar/manager.html";
+		}
+	</script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth">
+    </script>
+  </head>
+  <body>
+	<font face ='cursive' size='24'>Final Project : Calendar </font><br><br>
+    <div id="authorize-div">
+      <button id="authorize-button" a class='button' href='#' onclick="turntoAuth()"></a>
+        Authorize
+      </button>
+    </div><br>
+	<div id="list-div">
+      <button id="list-button" a class='button' href='#' onclick="turntoList()"></a>
+        List
+      </button>
+    </div><br>
+	<div id="make-div">
+      <button id="make-button" a class='button' href='#' onclick="turntoMake()"></a>
+        Make
+      </button>
+    </div><br>
+	<div id="manager-div">
+      <button id="manager-button" a class='button' href='#' onclick="turntoManager()"></a>
+        Manager
+      </button>
+    </div>
+  </body>
+</html>
